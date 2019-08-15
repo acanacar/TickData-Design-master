@@ -1,0 +1,84 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>Bokeh Plot</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="aa34d6bc-53db-4606-b7b3-fc25322d227f" data-root-id="2243"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="2376">
+          {"9eddb7cc-1ecc-482f-98fc-b67f0d4f8fe8":{"roots":{"references":[{"attributes":{"fields":["percentage of interval w/o transaction","percentage of interval w/ transaction"]},"id":"2267","type":"Stack"},{"attributes":{},"id":"2275","type":"BasicTickFormatter"},{"attributes":{"dimension":1,"ticker":{"id":"2259","type":"BasicTicker"}},"id":"2262","type":"Grid"},{"attributes":{},"id":"2255","type":"CategoricalTicker"},{"attributes":{"callback":null,"data":{"percentage of interval w/ transaction":[0.25313431331615244,0.27491973451200025,0.2872928574513728,0.30065867616888026,0.32095192847579146,0.3604560767038093,0.48186528497409326,0.9648033126293996],"percentage of interval w/o transaction":[0.7468656866838476,0.7250802654879998,0.7127071425486272,0.6993413238311197,0.6790480715242085,0.6395439232961907,0.5181347150259068,0.035196687370600444],"timeframes":["30S","1Min","5Min","15Min","30Min","1H","4H","1d"]},"selected":{"id":"2293","type":"Selection"},"selection_policy":{"id":"2292","type":"UnionRenderers"}},"id":"2268","type":"ColumnDataSource"},{"attributes":{},"id":"2259","type":"BasicTicker"},{"attributes":{"fields":["percentage of interval w/o transaction"]},"id":"2266","type":"Stack"},{"attributes":{"source":{"id":"2281","type":"ColumnDataSource"}},"id":"2286","type":"CDSView"},{"attributes":{"bottom":{"expr":{"id":"2264","type":"Stack"}},"fill_color":{"value":"#36802d"},"line_color":{"value":"#36802d"},"top":{"expr":{"id":"2265","type":"Stack"}},"width":{"value":0.9},"x":{"field":"timeframes"}},"id":"2270","type":"VBar"},{"attributes":{"bottom":{"expr":{"id":"2266","type":"Stack"}},"fill_color":{"value":"#e84d60"},"line_color":{"value":"#e84d60"},"top":{"expr":{"id":"2267","type":"Stack"}},"width":{"value":0.9},"x":{"field":"timeframes"}},"id":"2283","type":"VBar"},{"attributes":{"data_source":{"id":"2281","type":"ColumnDataSource"},"glyph":{"id":"2283","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"percentage of interval w/ transaction","nonselection_glyph":{"id":"2284","type":"VBar"},"selection_glyph":null,"view":{"id":"2286","type":"CDSView"}},"id":"2285","type":"GlyphRenderer"},{"attributes":{},"id":"2250","type":"CategoricalScale"},{"attributes":{"callback":null,"data":{"percentage of interval w/ transaction":[0.25313431331615244,0.27491973451200025,0.2872928574513728,0.30065867616888026,0.32095192847579146,0.3604560767038093,0.48186528497409326,0.9648033126293996],"percentage of interval w/o transaction":[0.7468656866838476,0.7250802654879998,0.7127071425486272,0.6993413238311197,0.6790480715242085,0.6395439232961907,0.5181347150259068,0.035196687370600444],"timeframes":["30S","1Min","5Min","15Min","30Min","1H","4H","1d"]},"selected":{"id":"2303","type":"Selection"},"selection_policy":{"id":"2302","type":"UnionRenderers"}},"id":"2281","type":"ColumnDataSource"},{"attributes":{},"id":"2292","type":"UnionRenderers"},{"attributes":{},"id":"2303","type":"Selection"},{"attributes":{"items":[{"id":"2280","type":"LegendItem"},{"id":"2294","type":"LegendItem"}]},"id":"2279","type":"Legend"},{"attributes":{"callback":null,"start":0},"id":"2248","type":"DataRange1d"},{"attributes":{"fields":[]},"id":"2264","type":"Stack"},{"attributes":{},"id":"2277","type":"CategoricalTickFormatter"},{"attributes":{"bottom":{"expr":{"id":"2266","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"2267","type":"Stack"}},"width":{"value":0.9},"x":{"field":"timeframes"}},"id":"2284","type":"VBar"},{"attributes":{"label":{"value":"percentage of interval w/o transaction"},"renderers":[{"id":"2272","type":"GlyphRenderer"}]},"id":"2280","type":"LegendItem"},{"attributes":{},"id":"2302","type":"UnionRenderers"},{"attributes":{"below":[{"id":"2254","type":"CategoricalAxis"}],"center":[{"id":"2257","type":"Grid"},{"id":"2262","type":"Grid"},{"id":"2279","type":"Legend"}],"left":[{"id":"2258","type":"LinearAxis"}],"outline_line_color":{"value":null},"plot_height":500,"renderers":[{"id":"2272","type":"GlyphRenderer"},{"id":"2285","type":"GlyphRenderer"}],"title":{"id":"2244","type":"Title"},"toolbar":{"id":"2263","type":"Toolbar"},"toolbar_location":null,"x_range":{"id":"2246","type":"FactorRange"},"x_scale":{"id":"2250","type":"CategoricalScale"},"y_range":{"id":"2248","type":"DataRange1d"},"y_scale":{"id":"2252","type":"LinearScale"}},"id":"2243","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"2252","type":"LinearScale"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto"},"id":"2263","type":"Toolbar"},{"attributes":{"label":{"value":"percentage of interval w/ transaction"},"renderers":[{"id":"2285","type":"GlyphRenderer"}]},"id":"2294","type":"LegendItem"},{"attributes":{"source":{"id":"2268","type":"ColumnDataSource"}},"id":"2273","type":"CDSView"},{"attributes":{"callback":null,"factors":["30S","1Min","5Min","15Min","30Min","1H","4H","1d"],"range_padding":0.1},"id":"2246","type":"FactorRange"},{"attributes":{"text":"percentage of interval counts by w/ or w/o transaction"},"id":"2244","type":"Title"},{"attributes":{"bottom":{"expr":{"id":"2264","type":"Stack"}},"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"expr":{"id":"2265","type":"Stack"}},"width":{"value":0.9},"x":{"field":"timeframes"}},"id":"2271","type":"VBar"},{"attributes":{"fields":["percentage of interval w/o transaction"]},"id":"2265","type":"Stack"},{"attributes":{"data_source":{"id":"2268","type":"ColumnDataSource"},"glyph":{"id":"2270","type":"VBar"},"hover_glyph":null,"muted_glyph":null,"name":"percentage of interval w/o transaction","nonselection_glyph":{"id":"2271","type":"VBar"},"selection_glyph":null,"view":{"id":"2273","type":"CDSView"}},"id":"2272","type":"GlyphRenderer"},{"attributes":{"grid_line_color":null,"ticker":{"id":"2255","type":"CategoricalTicker"}},"id":"2257","type":"Grid"},{"attributes":{"formatter":{"id":"2275","type":"BasicTickFormatter"},"minor_tick_line_color":{"value":null},"ticker":{"id":"2259","type":"BasicTicker"}},"id":"2258","type":"LinearAxis"},{"attributes":{"formatter":{"id":"2277","type":"CategoricalTickFormatter"},"minor_tick_line_color":{"value":null},"ticker":{"id":"2255","type":"CategoricalTicker"}},"id":"2254","type":"CategoricalAxis"},{"attributes":{},"id":"2293","type":"Selection"}],"root_ids":["2243"]},"title":"Bokeh Application","version":"1.3.4"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('2376').textContent;
+                  var render_items = [{"docid":"9eddb7cc-1ecc-482f-98fc-b67f0d4f8fe8","roots":{"2243":"aa34d6bc-53db-4606-b7b3-fc25322d227f"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        embed_document(root);
+                        clearInterval(timer);
+                      }
+                      attempts++;
+                      if (attempts > 100) {
+                        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        clearInterval(timer);
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>
