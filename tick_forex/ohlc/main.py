@@ -27,14 +27,18 @@ source = ColumnDataSource(dict(
     time=[], twap=[], low=[], high=[], open=[], close=[],
     ma=[], macd=[], macd9=[], macdh=[], color=[]
 ))
+TWAP5, TWAP10, TWAP20 = 'TWAP5', 'TWAP10', 'TWAP20'
+TWAP = Select(value=TWAP20, options=[TWAP5, TWAP10, TWAP20])
+
+
 p = figure(plot_height=500, tools="xpan,xwheel_zoom,xbox_zoom,reset", x_axis_type=None, y_axis_location="right")
 p.x_range.follow = "end"
 p.x_range.follow_interval = 100
 p.x_range.range_padding = 0
 
-p.line(x='time', y='twap', alpha=0.2, line_width=3, color='navy', source=source)
+p.line(x='time', y='twap', alpha=0.2, line_width=3, color='navy', source=source,legend="TWAP")
 # p.line(x='time', y='average', alpha=0.2, line_width=3, color='navy', source=source)
-p.line(x='time', y='ma', alpha=0.8, line_width=2, color='orange', source=source)
+p.line(x='time', y='ma', alpha=0.8, line_width=2, color='orange', source=source,legend="Moving Average")
 p.segment(x0='time', y0='low', x1='time', y1='high', line_width=2, color='black', source=source)
 p.segment(x0='time', y0='open', x1='time', y1='close', line_width=8, color='color', source=source)
 
@@ -46,9 +50,6 @@ p2.segment(x0='time', y0=0, x1='time', y1='macdh', line_width=6, color='black', 
 mean = Slider(title="mean", value=0, start=-0.01, end=0.01, step=0.001)
 stddev = Slider(title="stddev", value=0.04, start=0.01, end=0.1, step=0.01)
 mavg = Select(value=MA12, options=[MA12, MA26, EMA12, EMA26])
-
-TWAP5, TWAP10, TWAP20 = 'TWAP5', 'TWAP10', 'TWAP20'
-TWAP = Select(value=TWAP20, options=[TWAP5, TWAP10, TWAP20])
 
 
 def _create_prices_akbank(t):
@@ -74,16 +75,14 @@ def _create_prices(t):
 
 
 def _moving_avg(prices, days=10):
-    if len(prices) < days: return [0]
+    if len(prices) < days: return [prices[-1]]
     return np.convolve(prices[-days:], np.ones(days, dtype=float), mode="valid") / days
 
 
 def get_twap(open, high, low, close, days=10):
-    if len(open) < days: return [0]
-    o = open[-days]
-    h = max(high[-days:])
-    l = min(low[-days:])
-    c = close[-1]
+    if len(open) < days: return [open[-1]]
+    o, h = open[-days], max(high[-days:])
+    l, c = min(low[-days:]), close[-1]
     prices = [o, h, l, c]
     return np.convolve(prices[:], np.ones(4, dtype=float), mode="valid") / 4
 
@@ -128,13 +127,6 @@ def update(t):
     twap5 = get_twap(open, low, high, close, days=5)[0]
     twap10 = get_twap(open, low, high, close, days=10)[0]
     twap20 = get_twap(open, low, high, close, days=20)[0]
-
-    print('twap5\n',
-          'twap10\n',
-          'twap20\n')
-    print(twap5,
-          twap10,
-          twap20)
 
     if TWAP.value == TWAP5:
         new_data['twap'] = [twap5]
