@@ -32,11 +32,10 @@ def run_ml(pattern_parameters):
 
     patterns = getPatterns(data=pattern_data,
                            patternlength=pattern_parameters['patternlength'],
-                           col='close', outcome_shift=2)
+                           col='close', outcome_shift=pattern_parameters['outcome_shift'])
 
     X, y, data_spread = get_featuresets(patterns)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
     clf = VotingClassifier([('lsvc', svm.LinearSVC()),
                             ('knn', neighbors.KNeighborsClassifier()),
                             ('rfor', RandomForestClassifier())])
@@ -47,42 +46,49 @@ def run_ml(pattern_parameters):
     print('predicted class counts:', Counter(predictions))
     print()
     print()
-    return confidence, data_spread, Counter(predictions).most_common()
+    return clf, confidence, data_spread, Counter(predictions).most_common()
 
 
-multi_pattern_parameters = [{
-    'stock': 'AKBNK',
-    'patternlength': 10,
-    'similarity': 80,
-    'timeframe': '1d'
-}, {
-    'stock': 'AKBNK',
-    'patternlength': 20,
-    'similarity': 70,
-    'timeframe': '1d'
-}, {
-    'stock': 'AKBNK',
-    'patternlength': 20,
-    'similarity': 80,
-    'timeframe': '1H'
-}, {
-    'stock': 'AKBNK',
-    'patternlength': 30,
-    'similarity': 80,
-    'timeframe': '15Min'
-}, {
-    'stock': 'AKBNK',
-    'patternlength': 15,
-    'similarity': 80,
-    'timeframe': '4H'
-}
+'''
+multi_pattern_parameters = [
+    {
+        'stock': 'AKBNK',
+        'patternlength': 10,
+        'similarity': 80,
+        'timeframe': '1d',
+        'outcome_shift':2
+    }, {
+        'stock': 'AKBNK',
+        'patternlength': 20,
+        'similarity': 70,
+        'timeframe': '1d',
+        'outcome_shift':2
+    }, {
+        'stock': 'AKBNK',
+        'patternlength': 20,
+        'similarity': 80,
+        'timeframe': '1H',
+        'outcome_shift':2
+    }, {
+        'stock': 'AKBNK',
+        'patternlength': 30,
+        'similarity': 80,
+        'timeframe': '15Min',
+        'outcome_shift':2
+    }, {
+        'stock': 'AKBNK',
+        'patternlength': 15,
+        'similarity': 80,
+        'timeframe': '4H',
+        'outcome_shift':2
+    }
 ]
 a = []
 import time
 
 for pattern_parameters in multi_pattern_parameters:
     st = time.time()
-    confidence, data_spread, predicted_class_spread = run_ml(pattern_parameters)
+    clf, confidence, data_spread, predicted_class_spread = run_ml(pattern_parameters)
     et = time.time()
     resdict = pattern_parameters.copy()
     resultdict = {'accuracy': confidence,
@@ -94,3 +100,13 @@ for pattern_parameters in multi_pattern_parameters:
     print('sona eren ml : {}'.format(pattern_parameters))
 
 df = pd.DataFrame(a)
+'''
+pattern_parameters = {
+    'stock': 'AKBNK',
+    'patternlength': 25,
+    'similarity': 80,
+    'timeframe': '1Min',
+    'outcome_shift': 5
+}
+
+clf, confidence, data_spread, predicted_class_spread = run_ml(pattern_parameters)
