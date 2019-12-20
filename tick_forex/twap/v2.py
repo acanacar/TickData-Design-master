@@ -8,9 +8,9 @@ import pandas as pd
 
 paths = {
     'windows': {
-        '30Min': r'C:\Users\a.acar\PycharmProjects\Advanced-Deep-Trading-master\data_tick\bars\time_bars_30Min_AKBNK.pkl',
-        '5Min': r'C:\Users\a.acar\PycharmProjects\Advanced-Deep-Trading-master\data_tick\bars\time_bars_5Min_AKBNK.pkl',
-        '1Min': r'C:\Users\a.acar\PycharmProjects\Advanced-Deep-Trading-master\data_tick\bars\time_bars_1Min_AKBNK.pkl',
+        '30Min': r'C:\Users\a.acar\PycharmProjects\Advanced-Deep-Trading-master\data\tick\bars\time_bars_30Min_AKBNK.pkl',
+        '5Min': r'C:\Users\a.acar\PycharmProjects\Advanced-Deep-Trading-master\data\tick\bars\time_bars_5Min_AKBNK.pkl',
+        '1Min': r'C:\Users\a.acar\PycharmProjects\Advanced-Deep-Trading-master\data\tick\bars\time_bars_1Min_AKBNK.pkl',
     },
     'ubuntu':
         {
@@ -24,13 +24,8 @@ paths = {
             '150Tick': '/home/acanacar/Desktop/projects/pycharm/TickData-Design-master-master/data/bars/tick_bars_150_AKBNK.pkl',
         }
 }
-paths = paths['ubuntu']
-data_30Min = pd.read_pickle(paths['30Min'])
-data_5Min = pd.read_pickle(paths['5Min'])
+paths = paths['windows']
 data_1Min = pd.read_pickle(paths['1Min'])
-data_1000Tick = pd.read_pickle(paths['1000Tick'])
-data_250Tick = pd.read_pickle(paths['250Tick'])
-data_150Tick = pd.read_pickle(paths['150Tick'])
 
 df = data_1Min.copy()
 
@@ -42,3 +37,54 @@ for i in [10, 15, 20, 25, 30]:
 for i in [10, 15, 20, 25, 30]:
     df['twap_{}'.format(i)] = df.loc[:, "twap_{}_open".format(i):"twap_{}_close".format(i)].mean(axis=1)
 
+# ilk openi shift ettir
+d = {10: 1, 15: 2, 20: 2, 25: 3, 30: 10}
+for i in [10, 15, 20, 25, 30]:
+    df['future_twap_{}_open'.format(i)] = df['twap_{}_open'.format(i)].shift(-d[i])
+    df['future_twap_{}_current_high'.format(i)] = df.high.rolling(min_periods=i - d[i], window=i - d[i]).max()
+    df['future_twap_{}_current_low'.format(i)] = df.low.rolling(min_periods=i - d[i], window=i - d[i]).min()
+    df['future_twap_{}_current_volume'.format(i)] = df.low.rolling(min_periods=i - d[i],
+                                                                   window=i - d[i]).sum()
+    df['future_twap_{}'.format(i)] = df['twap_{}'.format(i)].shift(-d[i])
+
+df = df.dropna(how='any', axis=0)
+
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+train_size = .4
+split_point = int(len(df) * train_size)
+
+res = {}
+for i in [10, 15, 20, 25, 30]:
+    independent_cols = ['future_twap_{}_open'.format(i),
+                        'future_twap_{}_current_high'.format(i),
+                        'future_twap_{}_current_low'.format(i),
+                        'close'.format(i),
+                        'future_twap_{}_current_volume'.format(i)]
+    X = df[independent_cols].values[:split_point]
+    y = df['future_twap_{}'.format(i)].values[:split_point]
+    print(X.shape, y.shape)
+    reg = LinearRegression().fit(X, y)
+
+    X_test = df[independent_cols].values[split_point:]
+    y_test = df['future_twap_{}'.format(i)].values[split_point:]
+    y_predictions = reg.predict(X_test)
+    d = {i: {'score': reg.score(X_test, y_test), 'coef': reg.coef_, 'intercept': reg.intercept_}}
+    res.update(d)
+
+    df['prediction_future_twap_{}'.format(i)] = np.concatenate((y, y_predictions), axis=0)
+
+df = df.iloc[split_point:]
+
+cols = []
+for i in [10, 15, 20, 25, 30]:
+    cols.append('prediction_future_twap_{}'.format(i))
+    cols.append('future_twap_{}'.format(i))
+df2 = df[cols]
+for i in [10, 15, 20, 25, 30]:
+    df2['error_twap_{}'.format(i)] = \
+        df2['prediction_future_twap_{}'.format(i)] - df2['future_twap_{}'.format(i)]
+
+df.to_pickle(r'C:\Users\a.acar\PycharmProjects\ITCH\twap_regression.pkl')
+df2.to_pickle(r'C:\Users\a.acar\PycharmProjects\ITCH\twap_regression_with_error.pkl')
